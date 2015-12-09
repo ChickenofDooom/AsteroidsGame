@@ -1,23 +1,28 @@
 //your variable declaration
  SpaceShip bob = new SpaceShip();
-Asteroid[] asteroids= new Asteroid[6];
+/*Asteroid[] asteroids= new Asteroid[6];*/
 Star[] stars;
 /*Asteroid asteroids= new Asteroid();*/
-
+ ArrayList <Asteroid> asteroids;
 public void setup() {
   background(0);
   size(1000, 1000);
  
    stars = new Star[150];
-   asteroids= new Asteroid[6];
+  asteroids= new ArrayList <Asteroid>();
   for( int i =0; i<stars.length; i++){
    stars[i]= new Star(); 
   }
-  
- for(int j = 0; j < asteroids.length; j++)
+ for(int i =0; i<5;i++){
+   
+   asteroids.add(new Asteroid());
+ 
+ }
+ 
+ /*for(int j = 0; j < asteroids.size(); j++)
   {
     asteroids[j]= new Asteroid();
-  }
+  }*/
   
   //your code here
 }
@@ -28,16 +33,22 @@ public void draw() {
   for( int i =0; i<stars.length; i++){
    stars[i].show(); 
   }
-    for(int j= 0; j < asteroids.length; j++)
+    /*for(int j= 0; j < asteroids.length; j++)
   { 
     asteroids[j].move();
     asteroids[j].show();
-  }
+  } */
   //your code here
  
  /* asteroids.move();
   asteroids.show();
   System.out.println(asteroids.getX() + ", " + asteroids.getY());*/
+  for (int i=0; i<asteroids.size();i++){
+   asteroids.get(i).move();
+  asteroids.get(i).show(); 
+    
+  }
+  
 }
 public void keyPressed()
 {
@@ -53,12 +64,10 @@ public void keyPressed()
   if (key=='d') {
     bob.rotate(10);
   }
-  if (key=='q'){
+  if (key==' '){
     bob.setX((int)(Math.random()*1000));
     bob.setY((int)(Math.random()*1000));
-     
-    
-
+    bob.setPointDirection((int)(Math.random()*360));
   }
 }
 class Star{
@@ -147,7 +156,7 @@ class Asteroid extends Floater{
       yCorners[2]= 0;
       xCorners[3] =-8;
       yCorners[3]= -8;
-      myColor=color(255);
+      myColor=color(200);
       myCenterX=Math.random()*1000;
       myCenterY=Math.random()*1000;
       myDirectionX=((Math.random()*4)-2);
@@ -269,5 +278,6 @@ class Asteroid extends Floater{
       endShape(CLOSE);
     }
   }
+
 
 
