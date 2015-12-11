@@ -1,15 +1,18 @@
 //your variable declaration
+boolean gameOver;
  SpaceShip bob = new SpaceShip();
 /*Asteroid[] asteroids= new Asteroid[6];*/
 Star[] stars;
 /*Asteroid asteroids= new Asteroid();*/
  ArrayList <Asteroid> asteroids;
+ ArrayList <Bullet> ak47;
 public void setup() {
   background(0);
   size(1000, 1000);
  
    stars = new Star[150];
   asteroids= new ArrayList <Asteroid>();
+  ak47= new ArrayList <Bullet>();
   for( int i =0; i<stars.length; i++){
    stars[i]= new Star(); 
   }
@@ -18,6 +21,7 @@ public void setup() {
    asteroids.add(new Asteroid());
  
  }
+
  
  /*for(int j = 0; j < asteroids.size(); j++)
   {
@@ -48,7 +52,19 @@ public void draw() {
   asteroids.get(i).show(); 
     
   }
-  
+  for (int i=0; i<ak47.size();i++){
+   ak47.get(i).move(); 
+   ak47.get(i).move();
+  }
+  for (int i=0;i<asteroids.size();i++){
+  if( asteroids.get(i).myCenterX == bob.myCenterX){
+    gameOver= true;
+  }
+  if( asteroids.get(i).myCenterY == bob.myCenterY){
+    gameOver= true;
+  }
+  }
+
 }
 public void keyPressed()
 {
@@ -68,6 +84,11 @@ public void keyPressed()
     bob.setX((int)(Math.random()*1000));
     bob.setY((int)(Math.random()*1000));
     bob.setPointDirection((int)(Math.random()*360));
+    bob.setDirectionX(0);
+    bob.setDirectionY(0);
+  }
+  if (mousePressed){
+   ak47.add(new Bullet(bob)); 
   }
 }
 class Star{
@@ -88,14 +109,14 @@ void show(){
       corners=4;
       xCorners= new int [corners];
       yCorners= new int [corners];
-      xCorners[0]= 12;
+      xCorners[0]= 18;
       yCorners[0]= 0;
-      xCorners[1]= -8;
-      yCorners[1]= 8;
-      xCorners[2]= -4;
+      xCorners[1]= -12;
+      yCorners[1]= 12;
+      xCorners[2]= -6;
       yCorners[2]= 0;
-      xCorners[3] =-8;
-      yCorners[3]= -8;
+      xCorners[3] =-12;
+      yCorners[3]= -12;
       myColor=200;
       myCenterX=500;
       myCenterY=500;
@@ -148,14 +169,14 @@ class Asteroid extends Floater{
       corners=4;
      xCorners= new int [corners];
       yCorners= new int [corners];
-      xCorners[0]= 12;
+      xCorners[0]= 60;
       yCorners[0]= 0;
-      xCorners[1]= -8;
-      yCorners[1]= 8;
-      xCorners[2]= -4;
+      xCorners[1]= -40;
+      yCorners[1]= 40;
+      xCorners[2]= -20;
       yCorners[2]= 0;
-      xCorners[3] =-8;
-      yCorners[3]= -8;
+      xCorners[3] =-40;
+      yCorners[3]= -40;
       myColor=color(200);
       myCenterX=Math.random()*1000;
       myCenterY=Math.random()*1000;
@@ -200,6 +221,71 @@ class Asteroid extends Floater{
       super.move();
     }
   
+}
+class Bullet extends Floater
+{
+  
+Bullet(SpaceShip bob){
+  /*corners=4;
+      xCorners= new int [corners];
+      yCorners= new int [corners];
+      xCorners[0]= 12;
+      yCorners[0]= 0;
+      xCorners[1]= -8;
+      yCorners[1]= 8;
+      xCorners[2]= -4;
+      yCorners[2]= 0;
+      xCorners[3] =-8;
+      yCorners[3]= -8;*/
+      myColor=200;
+      myCenterX=500;
+      myCenterY=500;
+      myDirectionX=0.0;
+      myDirectionY=0.0;
+      myPointDirection=0.0;
+
+  
+  
+}
+  public void setX(int x) {
+      myCenterX=x;
+    }
+    public int getX() {
+      return (int)myCenterX;
+    }
+    public void setY(int y) {
+      myCenterY=y;
+    }
+    public int getY() {
+      return (int)myCenterY;
+    }
+    public void setDirectionX( double x) {
+      myDirectionX=x;
+    }
+    public double getDirectionX() {
+      return myDirectionX;
+    }
+    public void setDirectionY(double y) {
+      myDirectionY=y;
+    }
+    public double getDirectionY() {
+      return myDirectionY;
+    }
+    public void setPointDirection(int degrees) {
+      myPointDirection=degrees;
+    }  
+    public double getPointDirection() {
+      return myPointDirection;
+    }
+    public void move()
+    {
+      super.move();
+    }
+    public void show()
+    {
+      fill(255);
+     ellipse((float)myCenterX,(float)myCenterY,2,2); 
+    }
 }
   abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class
   {  
@@ -278,6 +364,5 @@ class Asteroid extends Floater{
       endShape(CLOSE);
     }
   }
-
 
 
